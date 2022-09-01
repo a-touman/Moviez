@@ -7,6 +7,9 @@ import 'package:moviez/utilities/constants.dart';
 import '../components/movie_poster_component.dart';
 import '../models/movie_details_model.dart';
 
+late List<MovieModel>
+    moviesList; // this is there to use in search after movies are loaded
+
 class MovieGenrePage extends StatefulWidget {
   final String genre;
 
@@ -47,7 +50,9 @@ class _MovieGenrePageState extends State<MovieGenrePage> {
             padding: const EdgeInsets.only(right: 15),
             child: IconButton(
               onPressed: () {
-                showSearch(context: context, delegate: GenreSearchDelegate());
+                if (moviesList != null) {
+                  showSearch(context: context, delegate: GenreSearchDelegate());
+                }
               },
               icon: Icon(
                 Icons.search,
@@ -62,6 +67,7 @@ class _MovieGenrePageState extends State<MovieGenrePage> {
             future: moviesbyGenre,
             builder: (context, AsyncSnapshot<List<MovieModel>> snapshot) {
               if (snapshot.hasData) {
+                moviesList = snapshot.data!;
                 var movies = snapshot.data;
                 return GridView.builder(
                   padding: EdgeInsets.all(15),
@@ -124,6 +130,56 @@ class GenreSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Container();
+    final List<MovieModel> searchSuggestions = query.isEmpty
+        ? []
+        : moviesList.where((movie) {
+            var movieName = movie.results.title?.toLowerCase();
+            var userEntry = query.toLowerCase();
+            return movieName!.contains(userEntry);
+          }).toList(); // creates a list of movie models which contain the user entry for titles
+    return buildSuggestionList(searchSuggestions);
+  }
+
+  Widget buildSuggestionList(List<MovieModel> searchSuggestions) {
+    return ListView.builder(
+      itemCount: searchSuggestions.length,
+      itemBuilder: (context, index) => ListTile(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MovieDetails(
+                  movieId: searchSuggestions[index].results.imdbId),
+            ),
+          );
+        },
+        visualDensity: VisualDensity(vertical: 4),
+        leading: Container(
+          width: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              onError: (exception, stackTrace) => Image.network(
+                  // case image url failed
+                  "https://source.unsplash.com/random?sig=3",
+                  fit: BoxFit.fill),
+              image: NetworkImage(
+                searchSuggestions[index].results.banner ??
+                    "https://source.unsplash.com/random?sig=3",
+              ),
+            ),
+          ),
+        ),
+        title: Text(
+          searchSuggestions[index].results.title ?? "Not Found",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(
+          "${searchSuggestions[index].results.year}" ?? "_",
+          style: TextStyle(color: kSubHeadingColor),
+        ),
+      ),
+    );
   }
 }
