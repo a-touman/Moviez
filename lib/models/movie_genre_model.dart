@@ -7,7 +7,7 @@ class MovieGenreModel {
     NetworkHelper helper = NetworkHelper(
         hostName: X_RapidAPI_Host,
         apiPath: "/movie/byGen/$genre/",
-        query: {"page_size": "25", "page": "1"},
+        query: {"page_size": "26", "page": "1"},
         headers: kHeaders);
 
     var data = await helper.getData();

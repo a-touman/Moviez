@@ -22,6 +22,11 @@ class MoviePosterComponent extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image(
+                errorBuilder: (context, error, stackTrace) => Image.network(
+                  // case image url failed
+                  "https://source.unsplash.com/random?sig=3",
+                  fit: BoxFit.fill,
+                ),
                 image: NetworkImage(imgURL!),
                 fit: BoxFit.cover,
               ),

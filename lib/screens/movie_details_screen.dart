@@ -105,6 +105,12 @@ class _MovieDetailsState extends State<MovieDetails> {
                               child: Image.network(
                                 "${snapshot.data?.results.banner}",
                                 fit: BoxFit.fill,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Image.network(
+                                  // case image url failed
+                                  "https://source.unsplash.com/random?sig=3",
+                                  fit: BoxFit.fill,
+                                ),
                                 height:
                                     MediaQuery.of(context).size.height * 0.6,
                                 width: MediaQuery.of(context).size.width,
@@ -238,6 +244,11 @@ class BlurryBackground extends StatelessWidget {
           blendMode: BlendMode.dstIn,
           child: Image.network(
             imgURL,
+            errorBuilder: (context, error, stackTrace) => Image.network(
+              // case image url failed
+              "https://source.unsplash.com/random?sig=3",
+              fit: BoxFit.fill,
+            ),
             height: MediaQuery.of(context).size.height * 0.75,
             width: MediaQuery.of(context).size.width,
             fit: BoxFit.cover,

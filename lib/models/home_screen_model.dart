@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:moviez/services/network.dart';
 import 'package:moviez/utilities/api_keys.dart';
+
+import 'movie_poster.dart';
 
 class HomePageData {
   List<MoviePoster> _moviesList = [];
@@ -35,22 +36,5 @@ class HomePageData {
     }
 
     return _moviesList;
-  }
-}
-
-//  represents cards
-class MoviePoster {
-  String _movieBanner;
-  String _movieID;
-
-  MoviePoster(this._movieBanner, this._movieID);
-
-  String get movieID => _movieID;
-
-  String get movieBanner => _movieBanner;
-
-  @override
-  String toString() {
-    return '{_movieBanner: $_movieBanner, _movieID: $_movieID}';
   }
 }

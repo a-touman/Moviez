@@ -10,6 +10,8 @@ import 'package:swipe_deck/swipe_deck.dart';
 import '../components/movie_cat_card.dart';
 import 'package:lottie/lottie.dart';
 
+import '../models/movie_poster.dart';
+
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
