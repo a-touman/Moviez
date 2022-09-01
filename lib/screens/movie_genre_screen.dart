@@ -176,7 +176,7 @@ class GenreSearchDelegate extends SearchDelegate {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
-          "${searchSuggestions[index].results.year}" ?? "_",
+          "${searchSuggestions[index].results.year}",
           style: TextStyle(color: kSubHeadingColor),
         ),
       ),
