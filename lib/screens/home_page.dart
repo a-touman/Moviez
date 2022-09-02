@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:moviez/models/home_screen_model.dart';
-import 'package:moviez/models/login_provider.dart';
 import 'package:moviez/screens/movie_details_screen.dart';
 import 'package:moviez/screens/search_page.dart';
-import 'package:provider/provider.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:moviez/utilities/constants.dart';
 import 'package:moviez/components/search_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swipe_deck/swipe_deck.dart';
 import '../components/movie_cat_card.dart';
 import 'package:lottie/lottie.dart';
@@ -176,33 +175,49 @@ class MovieCategories extends StatelessWidget {
   }
 }
 
-class TopScreenWelcome extends StatelessWidget {
+class TopScreenWelcome extends StatefulWidget {
+  @override
+  State<TopScreenWelcome> createState() => _TopScreenWelcomeState();
+}
+
+class _TopScreenWelcomeState extends State<TopScreenWelcome> {
   @override
   Widget build(BuildContext context) {
-    String lName = Provider.of<LoginProvider>(context).lName;
-    String lSeed = Provider.of<LoginProvider>(context).lSeed;
+    // String lName = Provider.of<LoginProvider>(context).lName;
+    // String lSeed = Provider.of<LoginProvider>(context).lSeed;
+
+    Future<String> getName() async {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      final String name = prefs.getString("name") ?? " ";
+      print(name);
+      return name;
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              "Hello $lName 👋 ",
-              style: TextStyle(fontWeight: FontWeight.bold),
+      child: FutureBuilder(
+        future: getName(),
+        builder: (context, snapshot) => Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                "Hello ${snapshot.data.toString()} 👋 ",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 5.0,
+              ),
+              Text("Browse your favourite movies", style: kSubHeadingStyle),
+            ]),
+            randomAvatar(
+              "${snapshot.data.toString()}",
+              height: 50,
+              width: 50,
             ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Text("Browse your favourite movies", style: kSubHeadingStyle),
-          ]),
-          randomAvatar(
-            "$lSeed",
-            height: 50,
-            width: 50,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

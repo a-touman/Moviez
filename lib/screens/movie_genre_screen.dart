@@ -82,7 +82,7 @@ class _MovieGenrePageState extends State<MovieGenrePage> {
                     var movie = movies![index];
                     return MoviePosterComponent(
                       title: movie.results.title,
-                      imgURL: movie.results.imageUrl,
+                      imgURL: movie.results.banner,
                       rating: movie.results.rating,
                       onPress: () {
                         Navigator.push(
@@ -165,7 +165,7 @@ class GenreSearchDelegate extends SearchDelegate {
                   "https://source.unsplash.com/random?sig=3",
                   fit: BoxFit.fill),
               image: NetworkImage(
-                searchSuggestions[index].results.banner ??
+                searchSuggestions[index].results.imageUrl ??
                     "https://source.unsplash.com/random?sig=3",
               ),
             ),

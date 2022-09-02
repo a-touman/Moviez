@@ -31,7 +31,7 @@ class HomePageData {
           headers: kHeaders);
 
       var data = await helper.getData();
-      var bannerURL = data["results"]["image_url"];
+      var bannerURL = data["results"]["banner"];
       _moviesList.add(MoviePoster(bannerURL, id));
     }
 

@@ -4,7 +4,7 @@ import 'package:moviez/models/login_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:moviez/components/ticket_button.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../components/name_field.dart';
 import 'home_page.dart';
 
@@ -45,8 +45,15 @@ class LoginPage extends StatelessWidget {
               ),
               TicketStyleButton(
                 buttonText: "Enter",
-                onPressed: () {
+                onPressed: () async {
                   if (name.isNotEmpty) {
+                    String name =
+                        Provider.of<LoginProvider>(context, listen: false)
+                            .lName;
+                    final SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    await prefs.setString("name", name);
+
                     Navigator.popAndPushNamed(context, "/MainScreen");
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(

@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: kMainAppColor,
         ),
-        initialRoute: "/MainScreen",
+        initialRoute: "/StartPage",
         routes: {
           "/StartPage": (context) => StartPage(),
           "/MainScreen": (context) => MainScreen(),

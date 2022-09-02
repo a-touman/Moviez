@@ -163,7 +163,7 @@ class _SearchPageState extends State<SearchPage> {
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                snapshot.data![index].results.banner ??
+                snapshot.data![index].results.imageUrl ??
                     "https://source.unsplash.com/random?sig=3",
                 width: 50,
                 errorBuilder: (context, error, stackTrace) => Image.network(

@@ -10,17 +10,6 @@ import '../models/movie_poster.dart';
 class BrowsePage extends StatefulWidget {
   const BrowsePage({Key? key}) : super(key: key);
 
-  // static const test = [
-  //   "fight_club",
-  //   "godfather",
-  //   "maze_runner",
-  //   "ouatih",
-  //   "venom"
-  // ];
-  //
-  // static String imgURL =
-  //     "https://www.sonypictures.com/sites/default/files/styles/max_560x840/public/title-key-art/Spider-Man-FarFromHome-rating.jpg?itok=CGe-MMMn";
-
   @override
   State<BrowsePage> createState() => _BrowsePageState();
 }

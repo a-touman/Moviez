@@ -15,7 +15,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   List pages = [HomePage(), BrowsePage(), SearchPage(), LoginPage()];
-  int currentSelection = 1;
+  int currentSelection = 0;
   void onTap(int index) {
     setState(() {
       currentSelection = index;
