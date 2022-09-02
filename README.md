@@ -1,16 +1,30 @@
-# moviez
+# Moviez
 
-A new Flutter project.
+an iOS/Android Flutter app for browsing, searching, and discovering movies.
 
-## Getting Started
+# Preview
+![previeww](https://user-images.githubusercontent.com/82515232/188236058-952f73fb-686a-4ba3-89e4-f000c0e1d44d.png)
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Dependenices
+- [provider](https://pub.dev/packages/provider) 
+- [shared_preferences](https://pub.dev/packages/shared_preferences) 
+- [http](https://pub.dev/packages/http)
+- [Shimmer](https://pub.dev/packages/shimmer) 
+- [url_launcher](https://pub.dev/packages/url_launcher) 
+- [Lottie](https://pub.dev/packages/lottie) 
+- [random_avatar](https://pub.dev/packages/random_avatar) 
+- [swipe_deck](https://pub.dev/packages/swipe_deck) 
+- [flutter_rating_bar](https://pub.dev/packages/flutter_rating_bar) 
+
+
+# Data Source (REST API)
+- [MoviesMiniDatabase](https://rapidapi.com/SAdrian/api/moviesminidatabase) on [RapidAPI](https://rapidapi.com/hub)
+
+# Design Inspiration
+
+# Setup 
+
+
