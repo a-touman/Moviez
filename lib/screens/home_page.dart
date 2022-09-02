@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moviez/models/home_screen_model.dart';
 import 'package:moviez/models/login_provider.dart';
 import 'package:moviez/screens/movie_details_screen.dart';
+import 'package:moviez/screens/search_page.dart';
 import 'package:provider/provider.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:moviez/utilities/constants.dart';
@@ -48,7 +49,17 @@ class _HomePageState extends State<HomePage> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                 child: SearchField(
-                    onChange: (value) {}, hint: "Search movie", withIcon: true),
+                    onSubmitted: (value) {
+                      if (value.isNotEmpty)
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SearchPage(query: value),
+                            ));
+                    },
+                    onChange: (value) {},
+                    hint: "Search movie",
+                    withIcon: true),
               ),
               SizedBox(
                 height: 15,

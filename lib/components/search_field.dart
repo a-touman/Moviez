@@ -5,15 +5,18 @@ class SearchField extends StatelessWidget {
   const SearchField(
       {Key? key,
       required this.onChange,
+      required this.onSubmitted,
       required this.hint,
       required this.withIcon})
       : super(key: key);
   final Function(String value) onChange;
+  final Function(String value) onSubmitted;
   final String hint;
   final bool withIcon;
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onSubmitted: onSubmitted,
       onChanged: onChange,
       keyboardType: TextInputType.text,
       cursorColor: kIconsColor,

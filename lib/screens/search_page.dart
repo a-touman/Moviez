@@ -2,25 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:moviez/components/search_field.dart';
 import 'package:moviez/models/movie_details_model.dart';
 import 'package:moviez/models/search_screen_model.dart';
+import 'package:moviez/screens/movie_details_screen.dart';
 import 'package:moviez/utilities/constants.dart';
-
-late Future<List<MovieModel>> searchResultList;
+import 'package:url_launcher/url_launcher.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  SearchPage({this.query = "Spider-man"});
+
+  String query;
 
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-  @override
-  void initState() {
-    super.initState();
-
-    searchResultList = SearchModel.getSearchResultsList("Movie");
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +38,7 @@ class _SearchPageState extends State<SearchPage> {
               ),
               Expanded(
                 child: FutureBuilder(
-                    future: searchResultList,
+                    future: SearchModel.getSearchResultsList(widget.query),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<MovieModel>> snapshot) {
                       switch (snapshot.connectionState) {
@@ -60,8 +55,31 @@ class _SearchPageState extends State<SearchPage> {
                                 snapshot: snapshot,
                               );
                             } else {
-                              return Center(
-                                child: Text("No Results found"),
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("No results found for '${widget.query}'",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  RaisedButton(
+                                    onPressed: () async {
+                                      var url =
+                                          "https://www.google.com/search?q=${widget.query}";
+                                      if (await canLaunch(url)) {
+                                        await launch(url,
+                                            forceWebView: true,
+                                            enableJavaScript: true);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
+                                    color: kWidgetBgColor,
+                                    child: const Text("Search Google"),
+                                  )
+                                ],
                               );
                             }
                           }
@@ -80,26 +98,72 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
-}
 
-class SearchResults extends StatelessWidget {
-  SearchResults({required this.snapshot});
+  Widget SearchingWidgets() {
+    String userInput = "";
 
-  final AsyncSnapshot<List<MovieModel>> snapshot;
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: SearchField(
+            onChange: (value) {
+              userInput = value.trim();
+            },
+            hint: " eg: Spider-man",
+            withIcon: false,
+            onSubmitted: (String value) {
+              setState(() {
+                if (value.isNotEmpty) {
+                  widget.query = value.trim();
+                }
+              });
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: InkWell(
+            onTap: () {
+              if (userInput.isNotEmpty) {
+                setState(() {
+                  widget.query = userInput;
+                });
+              }
+            },
+            child: Container(
+              height: 55,
+              width: 55,
+              decoration: BoxDecoration(
+                  color: kWidgetBgColor,
+                  borderRadius: BorderRadius.circular(20)),
+              child: Icon(Icons.search, color: kIconsColor),
+            ),
+          ),
+        )
+      ],
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget SearchResults({required AsyncSnapshot<List<MovieModel>> snapshot}) {
     return Container(
       child: ListView.builder(
         itemCount: snapshot.data!.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           return ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MovieDetails(
+                        movieId: snapshot.data![index].results.imdbId),
+                  ));
+            },
             visualDensity: VisualDensity(vertical: 4),
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                snapshot.data![index].results.imageUrl ??
+                snapshot.data![index].results.banner ??
                     "https://source.unsplash.com/random?sig=3",
                 width: 50,
                 errorBuilder: (context, error, stackTrace) => Image.network(
@@ -117,47 +181,6 @@ class SearchResults extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-}
-
-class SearchingWidgets extends StatelessWidget {
-  const SearchingWidgets({
-    Key? key,
-  }) : super(key: key);
-
-  static String query = "";
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: SearchField(
-              onChange: (value) {
-                query = value.trim();
-              },
-              hint: " ",
-              withIcon: false),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: InkWell(
-            onTap: () {
-              if (query.isNotEmpty) {
-                searchResultList = SearchModel.getSearchResultsList(query);
-              }
-            },
-            child: Container(
-              height: 55,
-              width: 55,
-              decoration: BoxDecoration(
-                  color: kWidgetBgColor,
-                  borderRadius: BorderRadius.circular(20)),
-              child: Icon(Icons.search, color: kIconsColor),
-            ),
-          ),
-        )
-      ],
     );
   }
 }
