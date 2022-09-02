@@ -5,7 +5,7 @@ an iOS/Android Flutter app for browsing, searching, and discovering movies.
 # Preview
 ![previeww](https://user-images.githubusercontent.com/82515232/188236058-952f73fb-686a-4ba3-89e4-f000c0e1d44d.png)
 
-
+<img align = "right" width="300" height="500" src="https://github.com/a-touman/Moviez/blob/main/moviez_preview.gif" >
 
 
 # Dependenices
