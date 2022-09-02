@@ -54,7 +54,7 @@ class MovieBrowseModel {
       var fullJson = await n.getData();
 
       MoviePoster poster =
-          MoviePoster(fullJson["results"]["banner"], result["imdb_id"]);
+          MoviePoster(fullJson["results"]['image_url'], result["imdb_id"]);
 
       popularMovies.add(poster);
     }
@@ -83,7 +83,7 @@ class MovieBrowseModel {
       var fullJson = await n.getData();
 
       MoviePoster poster =
-          MoviePoster(fullJson["results"]["banner"], result["imdb_id"]);
+          MoviePoster(fullJson["results"]['image_url'], result["imdb_id"]);
 
       topMovies.add(poster);
     }
@@ -112,7 +112,7 @@ class MovieBrowseModel {
       var fullJson = await n.getData();
 
       MoviePoster poster =
-          MoviePoster(fullJson["results"]["banner"], result["imdb_id"]);
+          MoviePoster(fullJson["results"]["image_url"], result["imdb_id"]);
 
       recentMovies.add(poster);
     }

@@ -55,31 +55,35 @@ class _SearchPageState extends State<SearchPage> {
                                 snapshot: snapshot,
                               );
                             } else {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("No results found for '${widget.query}'",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  RaisedButton(
-                                    onPressed: () async {
-                                      var url =
-                                          "https://www.google.com/search?q=${widget.query}";
-                                      if (await canLaunch(url)) {
-                                        await launch(url,
-                                            forceWebView: true,
-                                            enableJavaScript: true);
-                                      } else {
-                                        throw 'Could not launch $url';
-                                      }
-                                    },
-                                    color: kWidgetBgColor,
-                                    child: const Text("Search Google"),
-                                  )
-                                ],
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        "No results found for '${widget.query}'",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    RaisedButton(
+                                      onPressed: () async {
+                                        var url =
+                                            "https://www.google.com/search?q=${widget.query}";
+                                        if (await canLaunch(url)) {
+                                          await launch(url,
+                                              forceWebView: true,
+                                              enableJavaScript: true);
+                                        } else {
+                                          throw 'Could not launch $url';
+                                        }
+                                      },
+                                      color: kWidgetBgColor,
+                                      child: const Text("Search Google"),
+                                    )
+                                  ],
+                                ),
                               );
                             }
                           }

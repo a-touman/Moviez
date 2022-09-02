@@ -104,7 +104,7 @@ class MovieSlider extends StatelessWidget {
         builder: (context, AsyncSnapshot<List<MoviePoster>> snapshot) =>
             snapshot.hasData
                 ? Container(
-                    height: MediaQuery.of(context).size.height * 0.35,
+                    height: MediaQuery.of(context).size.height * 0.30,
                     child: ListView.builder(
                         padding: const EdgeInsets.only(
                           left: 15,
