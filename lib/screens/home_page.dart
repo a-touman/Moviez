@@ -45,8 +45,10 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               TopScreenWelcome(),
               Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SearchField(onChange: (value) {}),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                child: SearchField(
+                    onChange: (value) {}, hint: "Search movie", withIcon: true),
               ),
               SizedBox(
                 height: 15,
