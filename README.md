@@ -20,11 +20,12 @@ an iOS/Android Flutter app for browsing, searching, and discovering movies.
 - [flutter_rating_bar](https://pub.dev/packages/flutter_rating_bar) 
 
 
-# Data Source (REST API)
+# Data Source (REST API) 💾
 - [MoviesMiniDatabase](https://rapidapi.com/SAdrian/api/moviesminidatabase) on [RapidAPI](https://rapidapi.com/hub)
 
-# Design Inspiration
+# Design Inspiration 🍨
+- [Cinema Ticket App](https://dribbble.com/shots/16193655-Cinema-Ticket-App) on [Dribbble](https://dribbble.com)
 
-# Setup 
-
+# Setup ✈
+Use your own API key obtained from RapidAPI and paste in Moviez/lib/utilities/api_keys.dart
 
